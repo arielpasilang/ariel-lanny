@@ -1,0 +1,442 @@
+import Image from "next/image";
+import ProfilePicture from "./images/banner.png";
+import Letter from "./images/letters.png";
+import Button from "./components/button/index";
+import OurStoryTop from "./images/top-section-bg.png";
+import OurStoryText from "./images/our-story-text.png";
+import Ariel from "./images/ariel.png";
+import OurStoryPhoto from "./images/our-story-us.png";
+import Lanny from "./images/lanny.png";
+import OurStoryBottom from "./images/bot-section-bg.png";
+import ArielLannyLetter from "./images/ariellannyletter.png";
+import ChurchLocation from "./images/church-location.png";
+import VenueLocation from "./images/reception-location.png";
+import TheEntourage from "./images/the-entourage.png";
+import principal from "./consts/principal";
+import secondarySponsors from "./consts/secondary-sponsors";
+import offerers from "./consts/offerers.js";
+import Gcash from "./images/gcash.png";
+import ThankYouText from "./images/thank-you.png";
+
+const ImageContainer = ({ image }) => {
+  return (
+    <Image
+      style={{
+        width: "265px",
+        height: "auto",
+      }}
+      src={image}
+      alt="Profile Picture"
+      className="mx-auto"
+    />
+  );
+};
+
+export default function Home() {
+  return (
+    <div className="max-w-screen-sm mx-auto">
+      {/* Header */}
+      <div className="bg-white mx-auto p-[15px] max-w-full text-center mb-[150px] relative">
+        <div className="absolute left-0 right-0 h-96 w-full">
+          <Image
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
+            src={ProfilePicture}
+            alt="Profile Picture"
+          />
+        </div>
+
+        <div
+          className="py-16 bg-gradient-to-b from-[#4A7EBA] to-[rgba(74,126,186,0)] mx-auto max-w-full z-20 relative "
+          style={{ borderRadius: "40px 40px 0px 0px" }}
+        >
+          <p className="text-2xl text-white p-5 mb-3">
+            “Like this tree that has weathered countless storms, I vow to stay
+            as strong and steadfast as it stands.” ~Ariel
+          </p>
+          <Image src={Letter} width={380} className="mx-auto" />
+        </div>
+        <div className="mt-36 mx-auto flex flex-col w-10/12 inline-grid gap-5">
+          <div>
+            <h2 className="text-primary mb-2">Save the Date</h2>
+            <p className="text-primary">Saturday, October 12, 2024 | 2PM</p>
+          </div>
+          <Button style="primary" value="RSVP" />
+          <Button style="secondary" value="Nuptial Details" />
+        </div>
+      </div>
+      {/* Our Story */}
+      <div className="relative py-0 bg-cover bg-center text-center bg-no-repeat bg-[#147ACE] min-h-[500px]">
+        {/* Background Image with Blend Mode */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url(/images/marsh-mallow.jpeg)`,
+            backgroundBlendMode: "soft-light",
+            height: "390px", // Ensure full height
+          }}
+        ></div>
+
+        {/* Image Element */}
+        <div className="absolute left-0 right-0 top-[-135px] h-48 w-full">
+          <Image
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
+            width={0}
+            height={0}
+            src={OurStoryTop} // Ensure the correct path to the image
+            alt="Profile Picture"
+          />
+        </div>
+
+        {/* Heading on Top */}
+        <div className="relative z-50 opacity-100 text-center ">
+          <h2 className="text-white py-5">How We Met</h2>
+          <Image src={OurStoryText} className="w-10/12" />
+          <div className="py-5 px-[24px] mt-4 flex flex-col gap-5">
+            <Image src={Ariel} width={158} className="mx-auto" />
+            <h2 className="text-left text-white">Ariel:</h2>
+            <p className="text-left text-white">
+              We met on a hiking trail—of all places, right? I was reaching for
+              a rock to keep my balance, and suddenly, Lanny’s hand was there,
+              steadying me before I slipped. We laughed, started talking, and it
+              turned out we both loved hiking, camping—anything outdoors,
+              really. After that, it was like we couldn’t stop planning new
+              adventures together."
+            </p>
+            <Image src={OurStoryPhoto} className="mx-auto w-full" />
+            <Image src={Lanny} width={158} className="mx-auto" />
+            <h2 className="text-left text-white">Lanny:</h2>
+            <p className="text-left text-white">
+              We met on a hiking trail—of all places, right? I was reaching for
+              a rock to keep my balance, and suddenly, Lanny’s hand was there,
+              steadying me before I slipped. We laughed, started talking, and it
+              turned out we both loved hiking, camping—anything outdoors,
+              really. After that, it was like we couldn’t stop planning new
+              adventures together."
+            </p>
+          </div>
+        </div>
+
+        <div className="absolute left-0 right-0 bottom-[-180px] h-48 w-full z-50">
+          <Image
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
+            width={0}
+            height={0}
+            src={OurStoryBottom} // Ensure the correct path to the image
+            alt="Profile Picture"
+          />
+        </div>
+      </div>
+      {/* Parents Section */}
+      <div className="relative py-16 px-[24px] bg-cover mt-24 flex flex-col gap-[40px] bg-center text-center bg-no-repeat bg-white min-h-[550px]">
+        <h3 className="text-primary">We,</h3>
+        <div className="px-[33px]">
+          <ImageContainer image={ArielLannyLetter} />
+          <h3 className="text-[#4A7EBA]">Together</h3>
+          <h4 className="text-primary">with our parents</h4>
+        </div>
+        <hr className="border-hr-primary" />
+        <div className="px-[33px]">
+          <h1 className="text-[#4A7EBA]">Groom's Parents</h1>
+          <h4 className="text-primary">Mr. Alejandro Pasilang</h4>
+          <h4 className="text-primary">Mrs. Alejandra Pasilang</h4>
+        </div>
+        <hr className="border-hr-primary" />
+        <div className="px-[33px]">
+          <h1 className="text-[#4A7EBA]">Bride's Parents</h1>
+          <h4 className="text-primary">Mr. Rolando Mahilum</h4>
+          <h4 className="text-primary">Mrs. Florencia Mahilum</h4>
+        </div>
+        <hr className="border-hr-primary" />
+        <div className="px-[33px]">
+          <h1 className="text-[#4A7EBA]">Cordially invite you</h1>
+          <p className="text-primary mb-5 ">
+            to witness and celebrate with us as we enter the Holy Matrimony on
+          </p>
+          <h4 className="text-primary">
+            Saturday, October 12, 2024 <br /> at 2:00 in the afternoon
+          </h4>
+        </div>
+        <hr className="border-hr-primary" />
+        <div className="px-[33px]">
+          <h1 className="text-[#4A7EBA]">Ceremony</h1>
+          <p className="text-primary mb-5 italic">to be held at</p>
+          <h4 className="text-primary">
+            San Vicente Ferrer <br />
+            Catholic Parish Church
+          </h4>
+          <p className="text-primary mb-5">Bato, Toledo City, Cebu</p>
+          <Image src={ChurchLocation} className="mx-auto" />
+          <Button style="primary" value="View Map Location" />
+        </div>
+        <hr className="border-hr-primary" />
+        <div className="px-[33px]">
+          <h1 className="text-[#4A7EBA]">Reception</h1>
+          <p className="text-primary mb-5 italic">will follow</p>
+          <h4 className="text-primary">
+            Balay sa Angkay <br />
+            Ibo Toledo City, Cebu
+          </h4>
+          <p className="text-primary mb-5">Bato, Toledo City, Cebu</p>
+          <Image src={VenueLocation} className="mx-auto" />
+          <Button style="primary" value="View Map Location" />
+        </div>
+      </div>
+
+      <div className="relative py-0 bg-cover bg-center text-center bg-no-repeat bg-[#147ACE] mt-36 min-h-[500px]">
+        {/* Entourage Section */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url(/images/with-lamp.jpeg)`,
+            backgroundBlendMode: "soft-light",
+            height: "390px", // Ensure full height
+          }}
+        ></div>
+
+        {/* Image Element */}
+        <div className="absolute left-0 right-0 top-[-135px] h-48 w-full">
+          <Image
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
+            width={0}
+            height={0}
+            src={OurStoryTop} // Ensure the correct path to the image
+            alt="Profile Picture"
+          />
+        </div>
+
+        {/* Heading on Top */}
+        <div className="relative z-50 opacity-100 py-8 text-center ">
+          <Image src={TheEntourage} className="w-full" />
+          <div className="relative py-16 px-[24px] bg-cover flex flex-col gap-[40px] bg-center text-center bg-no-repeat min-h-[550px]">
+            <hr className="border-white" />
+            <div className="px-[33px]">
+              <h1 className="text-white">Maid of Honor</h1>
+              <p className="text-white mb-5 italic">
+                Supportive, dependable, best friend and confidante.
+              </p>
+              <h4 className="text-white leading-8">Krizia Jeanne Capus</h4>
+            </div>
+            <hr className="border-white" />
+            <div className="px-[33px]">
+              <h1 className="text-white">Best Man</h1>
+              <p className="text-white mb-5 italic">
+                Loyal, supportive, speech-giving brother.
+              </p>
+              <h4 className="text-white leading-8">Donjie Requiso</h4>
+            </div>
+            <hr className="border-white" />
+            <div className="px-[33px]">
+              <h1 className="text-white">Groomsmen</h1>
+              <h4 className="text-white leading-8">Dorell James Galang</h4>
+              <h4 className="text-white leading-8">Mark Gaudiano</h4>
+              <h4 className="text-white leading-8">Archie Gimena</h4>
+            </div>
+            <hr className="border-white" />
+            <div className="px-[33px]">
+              <h1 className="text-white">Bridesmaids</h1>
+              <h4 className="text-white leading-8">Charize Joy Dingding</h4>
+              <h4 className="text-white leading-8">Jessa Benigay</h4>
+              <h4 className="text-white leading-8">Janine Mahidlaon</h4>
+            </div>
+            <hr className="border-white" />
+            <div className="px-[33px]">
+              <h1 className="text-white">Flower Girls</h1>
+              <h4 className="text-white leading-8">Ashley Jane Pasilang</h4>
+              <h4 className="text-white leading-8">Andrea Marie Pasilan</h4>
+              <h4 className="text-white leading-8">Alannah Zie Brillante</h4>
+              <h4 className="text-white leading-8">Dayme Antoque</h4>
+            </div>
+            <hr className="border-white" />
+            <h1 className="text-white">Bearers</h1>
+            <div className="px-[33px]">
+              <h2 className="text-white italic">Ring</h2>
+              <h4 className="text-white leading-8">Reysean Kurt Mendrez</h4>
+            </div>
+            <div className="px-[33px]">
+              <h2 className="text-white italic">Bible</h2>
+              <h4 className="text-white leading-8">Crismhar John Mendrez</h4>
+            </div>
+            <div className="px-[33px]">
+              <h2 className="text-white italic">Coin</h2>
+              <h4 className="text-white leading-8">Paul Andi Balbuena</h4>
+            </div>
+            <div className="px-[33px]">
+              <h2 className="text-white italic">Rosary</h2>
+              <h4 className="text-white leading-8">Janrel Minoza</h4>
+            </div>
+            <hr className="border-white" />
+
+            <div className="px-[10px]">
+              <div className="flex flex-col gap-[16px]">
+                <div>
+                  <h1 className="text-white">Principal Sponsors</h1>
+                  <p className="text-white mb-5 italic">
+                    to stand as principal witness to our vows
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-white leading-8">
+                    Mr. Michael Joseph Bacalso
+                  </h4>
+                  <h4 className="text-white leading-8">
+                    Mrs. Monchyll Bacalso
+                  </h4>
+                </div>
+                <hr className="border-white w-[250px] mx-auto" />
+                <div>
+                  <h4 className="text-white leading-8">Mr. Reynaldo Canillo</h4>
+                  <h4 className="text-white leading-8">Mrs. Daisy Canillo</h4>
+                </div>
+                <hr className="border-white w-[250px] mx-auto" />
+                <div>
+                  <h4 className="text-white leading-8">Mr.Reynaldo Mag-aso</h4>
+                  <h4 className="text-white leading-8">Mrs. Charito Mag-aso</h4>
+                </div>
+                <hr className="border-white w-[250px] mx-auto" />
+                {principal.map((person) => (
+                  <>
+                    <div className={person.husband}>
+                      <h4 className="text-white leading-8">{person.husband}</h4>
+                      <h4 className="text-white leading-8">{person.wife}</h4>
+                    </div>
+                    <hr className="last:hidden border-white w-[250px] mx-auto" />
+                  </>
+                ))}
+              </div>
+            </div>
+            <hr className="border-hr-primary" />
+            <h1 className="text-white">Secondary Sponsors</h1>
+            {secondarySponsors.map((item) => (
+              <div className="px-[33px]">
+                <h2 className="text-white italic">{item.title}</h2>
+                <p className="description text-white">{item.description}</p>
+                <h4 className="text-white leading-8">{item.husband}</h4>
+                <h4 className="text-white leading-8">{item.wife}</h4>
+              </div>
+            ))}
+            <hr className="border-hr-primary" />
+            <h1 className="text-white">Offerers</h1>
+            {offerers.map((item) => (
+              <div className="px-[33px]">
+                <h2 className="text-white italic">{item.title}</h2>
+                <h4 className="text-white leading-8">{item.person1}</h4>
+                <h4 className="text-white leading-8">{item.person2}</h4>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="absolute left-0 right-0 bottom-[-180px] h-48 w-full z-50">
+          <Image
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
+            width={0}
+            height={0}
+            src={OurStoryBottom} // Ensure the correct path to the image
+            alt="Profile Picture"
+          />
+        </div>
+      </div>
+      <div className="relative py-48 px-[24px] bg-cover mt-16 flex flex-col gap-[40px] bg-center text-center bg-no-repeat bg-white min-h-[550px]">
+        <div className="flex gap-4 w-64 mx-auto">
+          <div className={`rounded-full bg-[#147ACE] w-[40px] h-[40px]`} />
+          <div className={`rounded-full bg-[#4A7EBA] w-[40px] h-[40px]`} />
+          <div className={`rounded-full bg-[#B3C9FB] w-[40px] h-[40px]`} />
+          <div className={`rounded-full bg-[#C28A35] w-[40px] h-[40px]`} />
+          <div className={`rounded-full bg-[#E5C465] w-[40px] h-[40px]`} />
+        </div>
+        <h1 className="text-primary">Attire</h1>
+        <div className="px-[33px]">
+          <h4 className="text-primary leading-8">
+            We try not to pick favorites but we are kindly asking our favorite
+            people to join us wearing our wedding colors.
+            <br />
+            <br />
+            Kindly wear your most comfortable formal attire. We’d love to see
+            you in these colors!
+          </h4>
+        </div>
+        <hr className="border-hr-primary" />
+        <h1 className="text-primary">Gifts</h1>
+        <div className="px-[33px]">
+          <h4 className="text-primary leading-8">
+            We feel incredible fortunate for everything that we have, and we
+            consider ourselves truly blessed. Your presence and prayers are all
+            that we ask for.
+            <br />
+            <br />
+            Nonetheless, if you believe in the value of gift giving, a gift of
+            cash for our future would be a delightful blessing.
+          </h4>
+        </div>
+        <h1 className="text-primary">Scan Gcash QR code</h1>
+        <div className="px-[33px]">
+          <Image src={Gcash} className="mx-auto" />
+        </div>
+      </div>
+
+      <div className="relative py-0 bg-cover bg-center text-center bg-no-repeat bg-[#147ACE]">
+        {/* Background Image with Blend Mode */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url(/images/bottom-banner.jpeg)`,
+            backgroundBlendMode: "soft-light",
+            height: "390px", // Ensure full height
+          }}
+        ></div>
+
+        {/* Image Element */}
+        <div className="absolute left-0 right-0 top-[-135px] h-48 w-full">
+          <Image
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
+            width={0}
+            height={0}
+            src={OurStoryTop} // Ensure the correct path to the image
+            alt="Profile Picture"
+          />
+        </div>
+        <div className="relative z-50 opacity-100 text-center ">
+          <Image src={ThankYouText} className="w-10/12" />
+          <div className="py-5 px-[24px] flex flex-col gap-5">
+            <hr className="border-white" />
+            <h4 className="text-white text-center leading-8">
+              If you wish to upload your photos during the wedding, please feel
+              free to upload or share them with us. Thank you!
+            </h4>
+            <Button style="secondary" value="Upload Photos Here" />
+          </div>
+        </div>
+        <div className="absolute left-0 right-0 bottom-[-180px] h-48 w-full z-50">
+          <Image
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
+            width={0}
+            height={0}
+            src={OurStoryBottom} // Ensure the correct path to the image
+            alt="Profile Picture"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
