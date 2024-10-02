@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import ProfilePicture from "./images/banner.png";
 import Letter from "./images/letters.png";
@@ -17,6 +20,7 @@ import secondarySponsors from "./consts/secondary-sponsors";
 import offerers from "./consts/offerers.js";
 import Gcash from "./images/gcash.png";
 import ThankYouText from "./images/thank-you.png";
+import Modal from "./components/modal";
 
 const ImageContainer = ({ image }) => {
   return (
@@ -33,10 +37,21 @@ const ImageContainer = ({ image }) => {
 };
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="max-w-screen-sm mx-auto">
       {/* Header */}
-      <div className="bg-white mx-auto p-[15px] max-w-full text-center mb-[150px] relative">
+      <Modal isOpen={isModalOpen} onClose={closeModal} />
+      <div className="bg-white mx-auto p-[15px] max-w-full text-center mb-[50px] relative">
         <div className="absolute left-0 right-0 h-96 w-full">
           <Image
             style={{
@@ -49,7 +64,7 @@ export default function Home() {
         </div>
 
         <div
-          className="py-16 bg-gradient-to-b from-[#4A7EBA] to-[rgba(74,126,186,0)] mx-auto max-w-full z-20 relative "
+          className="py-16 bg-gradient-to-b from-[#4A7EBA] to-[rgba(74,126,186,0)] mx-auto max-w-full relative "
           style={{ borderRadius: "40px 40px 0px 0px" }}
         >
           <p className="text-2xl text-white p-5 mb-3">
@@ -58,20 +73,46 @@ export default function Home() {
           </p>
           <Image src={Letter} width={380} className="mx-auto" />
         </div>
-        <div className="mt-36 mx-auto flex flex-col w-10/12 inline-grid gap-5">
+        <div className="pt-36 md:pt-[450px] mx-auto flex flex-col w-10/12 inline-grid gap-5">
           <div>
             <h2 className="text-primary mb-2">Save the Date</h2>
             <p className="text-primary">Saturday, October 12, 2024 | 2PM</p>
           </div>
-          <Button style="primary" value="RSVP" />
-          <Button style="secondary" value="Nuptial Details" />
+          <Button
+            style="primary"
+            value="RSVP"
+            link={false}
+            href={null}
+            newTab={undefined}
+            onClick={openModal}
+          />
+          <Button
+            style="secondary"
+            value="Nuptial Details"
+            link={true}
+            href="#nuptial-details"
+            newTab={false}
+          />
         </div>
       </div>
       {/* Our Story */}
-      <div className="relative py-0 bg-cover bg-center text-center bg-no-repeat bg-[#147ACE] min-h-[500px]">
+
+      <div className="relative w-full">
+        <Image
+          style={{
+            width: "100%",
+            height: "auto",
+          }}
+          width={0}
+          height={0}
+          src={OurStoryTop} // Ensure the correct path to the image
+          alt="Profile Picture"
+        />
+      </div>
+      <div className="relative py-4 bg-cover bg-center text-center bg-no-repeat bg-[#147ACE] min-h-[500px]">
         {/* Background Image with Blend Mode */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="bg-top bg-cover bg-no-repeat absolute left-0 right-0 pt-32"
           style={{
             backgroundImage: `url(/images/marsh-mallow.jpeg)`,
             backgroundBlendMode: "soft-light",
@@ -79,34 +120,22 @@ export default function Home() {
           }}
         ></div>
 
-        {/* Image Element */}
-        <div className="absolute left-0 right-0 top-[-135px] h-48 w-full">
-          <Image
-            style={{
-              width: "100%",
-              height: "auto",
-            }}
-            width={0}
-            height={0}
-            src={OurStoryTop} // Ensure the correct path to the image
-            alt="Profile Picture"
-          />
-        </div>
-
         {/* Heading on Top */}
-        <div className="relative z-50 opacity-100 text-center ">
+        <div className="relative z-20 opacity-100 text-center ">
           <h2 className="text-white py-5">How We Met</h2>
-          <Image src={OurStoryText} className="w-10/12" />
+          <Image src={OurStoryText} className="w-9/12" />
           <div className="py-5 px-[24px] mt-4 flex flex-col gap-5">
             <Image src={Ariel} width={158} className="mx-auto" />
             <h2 className="text-left text-white">Ariel:</h2>
             <p className="text-left text-white">
-              We met on a hiking trail—of all places, right? I was reaching for
-              a rock to keep my balance, and suddenly, Lanny’s hand was there,
-              steadying me before I slipped. We laughed, started talking, and it
-              turned out we both loved hiking, camping—anything outdoors,
-              really. After that, it was like we couldn’t stop planning new
-              adventures together."
+              We met on a hiking trail—of all places, right? She complained the
+              whole way up the mountain, but luckily, I was there to give her a
+              little encouragement. I secretly snapped some pictures of her that
+              always make me smirk whenever I look at them. And then, the best
+              part: while I was busy setting up my tent, she offered me a
+              cookie. I declined because my hands were dirty, so she offered to
+              feed it to me instead. Such a simple act of kindness, but it’s
+              stuck with me ever since.
             </p>
             <Image src={OurStoryPhoto} className="mx-auto w-full" />
             <Image src={Lanny} width={158} className="mx-auto" />
@@ -121,22 +150,26 @@ export default function Home() {
             </p>
           </div>
         </div>
-
-        <div className="absolute left-0 right-0 bottom-[-180px] h-48 w-full z-50">
-          <Image
-            style={{
-              width: "100%",
-              height: "auto",
-            }}
-            width={0}
-            height={0}
-            src={OurStoryBottom} // Ensure the correct path to the image
-            alt="Profile Picture"
-          />
-        </div>
       </div>
+
+      <div className="w-full z-20 mt-[-5px]">
+        <Image
+          style={{
+            width: "100%",
+            height: "auto",
+          }}
+          width={0}
+          height={0}
+          src={OurStoryBottom} // Ensure the correct path to the image
+          alt="Profile Picture"
+        />
+      </div>
+
       {/* Parents Section */}
-      <div className="relative py-16 px-[24px] bg-cover mt-24 flex flex-col gap-[40px] bg-center text-center bg-no-repeat bg-white min-h-[550px]">
+      <div
+        className="relative py-16 px-[24px] bg-cover flex flex-col gap-[40px] bg-center text-center bg-no-repeat bg-white"
+        id="nuptial-details"
+      >
         <h3 className="text-primary">We,</h3>
         <div className="px-[33px]">
           <ImageContainer image={ArielLannyLetter} />
@@ -175,7 +208,12 @@ export default function Home() {
           </h4>
           <p className="text-primary mb-5">Bato, Toledo City, Cebu</p>
           <Image src={ChurchLocation} className="mx-auto" />
-          <Button style="primary" value="View Map Location" />
+          <Button
+            style="primary"
+            value="View Map Location"
+            link="https://maps.app.goo.gl/JXWcVbGAwuKZJ1To7"
+            newTab={true}
+          />
         </div>
         <hr className="border-hr-primary" />
         <div className="px-[33px]">
@@ -187,14 +225,33 @@ export default function Home() {
           </h4>
           <p className="text-primary mb-5">Bato, Toledo City, Cebu</p>
           <Image src={VenueLocation} className="mx-auto" />
-          <Button style="primary" value="View Map Location" />
+          <Button
+            style="primary"
+            value="View Map Location"
+            link="https://maps.app.goo.gl/7xFDXcTY22f5iQHe9"
+            newTab={true}
+          />
         </div>
       </div>
 
-      <div className="relative py-0 bg-cover bg-center text-center bg-no-repeat bg-[#147ACE] mt-36 min-h-[500px]">
+      {/* Image Element */}
+      <div className="relative w-full">
+        <Image
+          style={{
+            width: "100%",
+            height: "auto",
+          }}
+          width={0}
+          height={0}
+          src={OurStoryTop} // Ensure the correct path to the image
+          alt="Profile Picture"
+        />
+      </div>
+
+      <div className="relative py-0 bg-cover bg-center text-center bg-no-repeat bg-[#147ACE]">
         {/* Entourage Section */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="bg-top bg-cover bg-no-repeat absolute left-0 right-0 pt-32"
           style={{
             backgroundImage: `url(/images/with-lamp.jpeg)`,
             backgroundBlendMode: "soft-light",
@@ -202,22 +259,8 @@ export default function Home() {
           }}
         ></div>
 
-        {/* Image Element */}
-        <div className="absolute left-0 right-0 top-[-135px] h-48 w-full">
-          <Image
-            style={{
-              width: "100%",
-              height: "auto",
-            }}
-            width={0}
-            height={0}
-            src={OurStoryTop} // Ensure the correct path to the image
-            alt="Profile Picture"
-          />
-        </div>
-
         {/* Heading on Top */}
-        <div className="relative z-50 opacity-100 py-8 text-center ">
+        <div className="relative z-20 opacity-100 text-center ">
           <Image src={TheEntourage} className="w-full" />
           <div className="relative py-16 px-[24px] bg-cover flex flex-col gap-[40px] bg-center text-center bg-no-repeat min-h-[550px]">
             <hr className="border-white" />
@@ -306,20 +349,20 @@ export default function Home() {
                 </div>
                 <hr className="border-white w-[250px] mx-auto" />
                 {principal.map((person) => (
-                  <>
+                  <div key={person.husband}>
                     <div className={person.husband}>
                       <h4 className="text-white leading-8">{person.husband}</h4>
                       <h4 className="text-white leading-8">{person.wife}</h4>
                     </div>
                     <hr className="last:hidden border-white w-[250px] mx-auto" />
-                  </>
+                  </div>
                 ))}
               </div>
             </div>
             <hr className="border-hr-primary" />
             <h1 className="text-white">Secondary Sponsors</h1>
             {secondarySponsors.map((item) => (
-              <div className="px-[33px]">
+              <div className="px-[33px]" key={item.title}>
                 <h2 className="text-white italic">{item.title}</h2>
                 <p className="description text-white">{item.description}</p>
                 <h4 className="text-white leading-8">{item.husband}</h4>
@@ -329,7 +372,7 @@ export default function Home() {
             <hr className="border-hr-primary" />
             <h1 className="text-white">Offerers</h1>
             {offerers.map((item) => (
-              <div className="px-[33px]">
+              <div className="px-[33px]" key={item.title}>
                 <h2 className="text-white italic">{item.title}</h2>
                 <h4 className="text-white leading-8">{item.person1}</h4>
                 <h4 className="text-white leading-8">{item.person2}</h4>
@@ -337,21 +380,21 @@ export default function Home() {
             ))}
           </div>
         </div>
-
-        <div className="absolute left-0 right-0 bottom-[-180px] h-48 w-full z-50">
-          <Image
-            style={{
-              width: "100%",
-              height: "auto",
-            }}
-            width={0}
-            height={0}
-            src={OurStoryBottom} // Ensure the correct path to the image
-            alt="Profile Picture"
-          />
-        </div>
       </div>
-      <div className="relative py-48 px-[24px] bg-cover mt-16 flex flex-col gap-[40px] bg-center text-center bg-no-repeat bg-white min-h-[550px]">
+
+      <div className="w-full z-20 mt-[-5px]">
+        <Image
+          style={{
+            width: "100%",
+            height: "auto",
+          }}
+          width={0}
+          height={0}
+          src={OurStoryBottom} // Ensure the correct path to the image
+          alt="Profile Picture"
+        />
+      </div>
+      <div className="relative py-24 px-[24px] bg-cover flex flex-col gap-[40px] bg-center text-center bg-no-repeat bg-white">
         <div className="flex gap-4 w-64 mx-auto">
           <div className={`rounded-full bg-[#147ACE] w-[40px] h-[40px]`} />
           <div className={`rounded-full bg-[#4A7EBA] w-[40px] h-[40px]`} />
@@ -389,10 +432,23 @@ export default function Home() {
         </div>
       </div>
 
+      <div className="relative w-full">
+        <Image
+          style={{
+            width: "100%",
+            height: "auto",
+          }}
+          width={0}
+          height={0}
+          src={OurStoryTop} // Ensure the correct path to the image
+          alt="Profile Picture"
+        />
+      </div>
+
       <div className="relative py-0 bg-cover bg-center text-center bg-no-repeat bg-[#147ACE]">
         {/* Background Image with Blend Mode */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="bg-top bg-cover bg-no-repeat absolute left-0 right-0 pt-32"
           style={{
             backgroundImage: `url(/images/bottom-banner.jpeg)`,
             backgroundBlendMode: "soft-light",
@@ -401,27 +457,22 @@ export default function Home() {
         ></div>
 
         {/* Image Element */}
-        <div className="absolute left-0 right-0 top-[-135px] h-48 w-full">
-          <Image
-            style={{
-              width: "100%",
-              height: "auto",
-            }}
-            width={0}
-            height={0}
-            src={OurStoryTop} // Ensure the correct path to the image
-            alt="Profile Picture"
-          />
-        </div>
-        <div className="relative z-50 opacity-100 text-center ">
-          <Image src={ThankYouText} className="w-10/12" />
+
+        <div className="relative z-20 py-5 opacity-100 text-center ">
+          <Image src={ThankYouText} className="w-11/12" />
           <div className="py-5 px-[24px] flex flex-col gap-5">
             <hr className="border-white" />
             <h4 className="text-white text-center leading-8">
               If you wish to upload your photos during the wedding, please feel
               free to upload or share them with us. Thank you!
             </h4>
-            <Button style="secondary" value="Upload Photos Here" />
+            <Button
+              style="secondary"
+              value="Upload Photos Here"
+              link={true}
+              href="https://photos.app.goo.gl/K2UgxAypxtwosj8N9"
+              newTab={true}
+            />
           </div>
         </div>
         <div className="absolute left-0 right-0 bottom-[-180px] h-48 w-full z-50">
