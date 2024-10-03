@@ -354,7 +354,9 @@ export default function Home() {
                       <h4 className="text-white leading-8">{person.husband}</h4>
                       <h4 className="text-white leading-8">{person.wife}</h4>
                     </div>
-                    <hr className="last:hidden border-white w-[250px] mx-auto" />
+                    {person.husband !== "Mr. Leonardo Canillo" && (
+                      <hr className="border-white w-[250px] mx-auto" />
+                    )}
                   </div>
                 ))}
               </div>
