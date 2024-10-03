@@ -142,7 +142,7 @@ export default function Home() {
             <h2 className="text-left text-white">Lanny:</h2>
             <p className="text-left text-white">
               We met on a hiking trail—of all places, right? I was reaching for
-              a rock to keep my balance, and suddenly, Lanny’s hand was there,
+              a rock to keep my balance, and suddenly, Ariel’s hand was there,
               steadying me before I slipped. We laughed, started talking, and it
               turned out we both loved hiking, camping—anything outdoors,
               really. After that, it was like we couldn’t stop planning new
