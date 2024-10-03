@@ -137,7 +137,7 @@ export default function Home() {
               feed it to me instead. Such a simple act of kindness, but it’s
               stuck with me ever since.
             </p>
-            <Image src={OurStoryPhoto} className="mx-auto w-full" />
+            <Image src={OurStoryPhoto} className="mx-auto w-full py-12" />
             <Image src={Lanny} width={158} className="mx-auto" />
             <h2 className="text-left text-white">Lanny:</h2>
             <p className="text-left text-white">
