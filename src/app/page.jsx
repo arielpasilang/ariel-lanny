@@ -116,7 +116,7 @@ export default function Home() {
           style={{
             backgroundImage: `url(/images/marsh-mallow.jpeg)`,
             backgroundBlendMode: "soft-light",
-            height: "390px", // Ensure full height
+            minHeight: "350px", // Ensure full height
           }}
         ></div>
 
@@ -261,7 +261,7 @@ export default function Home() {
           style={{
             backgroundImage: `url(/images/with-lamp.jpeg)`,
             backgroundBlendMode: "soft-light",
-            height: "390px", // Ensure full height
+            minHeight: "350px", // Ensure full height
           }}
         ></div>
 
@@ -447,7 +447,7 @@ export default function Home() {
           style={{
             backgroundImage: `url(/images/bottom-banner.jpeg)`,
             backgroundBlendMode: "soft-light",
-            height: "390px", // Ensure full height
+            minHeight: "350px", // Ensure full height
           }}
         ></div>
 
