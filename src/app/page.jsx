@@ -177,16 +177,22 @@ export default function Home() {
           <h4 className="text-primary">with our parents</h4>
         </div>
         <hr className="border-hr-primary" />
-        <div className="px-[33px]">
+        <div className="px-[33px] relative">
           <h1 className="text-[#4A7EBA]">Groom's Parents</h1>
           <h4 className="text-primary">Mr. Alejandro Pasilang</h4>
           <h4 className="text-primary">Mrs. Alejandra Pasilang</h4>
+          <p className="absolute left-0 right-0 top-14 opacity-20 and-blue">
+            &
+          </p>
         </div>
         <hr className="border-hr-primary" />
-        <div className="px-[33px]">
+        <div className="px-[33px] relative">
           <h1 className="text-[#4A7EBA]">Bride's Parents</h1>
           <h4 className="text-primary">Mr. Rolando Mahilum</h4>
           <h4 className="text-primary">Mrs. Florencia Mahilum</h4>
+          <p className="absolute left-0 right-0 top-14 opacity-20 and-blue">
+            &
+          </p>
         </div>
         <hr className="border-hr-primary" />
         <div className="px-[33px]">
@@ -329,30 +335,17 @@ export default function Home() {
                     to stand as principal witness to our vows
                   </p>
                 </div>
-                <div>
-                  <h4 className="text-white leading-8">
-                    Mr. Michael Joseph Bacalso
-                  </h4>
-                  <h4 className="text-white leading-8">
-                    Mrs. Monchyll Bacalso
-                  </h4>
-                </div>
-                <hr className="border-white w-[250px] mx-auto" />
-                <div>
-                  <h4 className="text-white leading-8">Mr. Reynaldo Canillo</h4>
-                  <h4 className="text-white leading-8">Mrs. Daisy Canillo</h4>
-                </div>
-                <hr className="border-white w-[250px] mx-auto" />
-                <div>
-                  <h4 className="text-white leading-8">Mr.Reynaldo Mag-aso</h4>
-                  <h4 className="text-white leading-8">Mrs. Charito Mag-aso</h4>
-                </div>
-                <hr className="border-white w-[250px] mx-auto" />
                 {principal.map((person) => (
-                  <div key={person.husband}>
-                    <div className={person.husband}>
+                  <div
+                    key={person.husband}
+                    className="flex flex-col gap-5 relative"
+                  >
+                    <div>
                       <h4 className="text-white leading-8">{person.husband}</h4>
                       <h4 className="text-white leading-8">{person.wife}</h4>
+                      <p className="absolute left-0 right-0 top-2 opacity-20 and-white">
+                        &
+                      </p>
                     </div>
                     {person.husband !== "Mr. Leonardo Canillo" && (
                       <hr className="border-white w-[250px] mx-auto" />

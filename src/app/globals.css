@@ -57,7 +57,7 @@ h4 {
 font-size: 24px;
 font-style: normal;
 font-weight: 400;
-line-height: 100%; /* 36px */
+line-height: 120%; /* 36px */
 }
 
 p {
@@ -74,4 +74,22 @@ p {
   font-style: normal;
   font-weight: 400;
   line-height: 120%;
+}
+
+.and-white {
+  font-size: 84px;
+  font-family: var(--font-eb-garamond);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 36px;
+  color: #fff;
+}
+
+.and-blue {
+  font-size: 84px;
+  font-family: var(--font-eb-garamond);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 36px;
+  color: #4A7EBA;
 }
