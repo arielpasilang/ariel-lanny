@@ -279,7 +279,7 @@ export default function Home() {
             <div className="px-[33px]">
               <h1 className="text-white">Maid of Honor</h1>
               <p className="text-white mb-5 italic">
-                Supportive, dependable, best friend and confidante.
+                Supportive, dependable, best friend and confidante
               </p>
               <h4 className="text-white leading-8">Krizia Jeanne Capus</h4>
             </div>
@@ -287,7 +287,7 @@ export default function Home() {
             <div className="px-[33px]">
               <h1 className="text-white">Best Man</h1>
               <p className="text-white mb-5 italic">
-                Loyal, supportive, speech-giving brother.
+                Loyal, supportive, speech-giving brother
               </p>
               <h4 className="text-white leading-8">Donjie Requiso</h4>
             </div>
@@ -309,7 +309,7 @@ export default function Home() {
             <div className="px-[33px]">
               <h1 className="text-white">Flower Girls</h1>
               <h4 className="text-white leading-8">Ashley Jane Pasilang</h4>
-              <h4 className="text-white leading-8">Andrea Marie Pasilan</h4>
+              <h4 className="text-white leading-8">Andrea Marie Balbulena</h4>
               <h4 className="text-white leading-8">Alannah Zie Brillante</h4>
               <h4 className="text-white leading-8">Dayme Antoque</h4>
             </div>
