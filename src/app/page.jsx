@@ -309,7 +309,7 @@ export default function Home() {
             <div className="px-[33px]">
               <h1 className="text-white">Flower Girls</h1>
               <h4 className="text-white leading-8">Ashley Jane Pasilang</h4>
-              <h4 className="text-white leading-8">Andrea Marie Balbulena</h4>
+              <h4 className="text-white leading-8">Andrea Marie Balbuena</h4>
               <h4 className="text-white leading-8">Alannah Zie Brillante</h4>
               <h4 className="text-white leading-8">Dayme Antoque</h4>
             </div>
@@ -329,7 +329,7 @@ export default function Home() {
             </div>
             <div className="px-[33px]">
               <h2 className="text-white italic">Rosary</h2>
-              <h4 className="text-white leading-8">Janrel Minoza</h4>
+              <h4 className="text-white leading-8">Janrel Miñoza</h4>
             </div>
             <hr className="border-white" />
 
