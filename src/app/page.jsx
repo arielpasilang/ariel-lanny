@@ -141,12 +141,18 @@ export default function Home() {
             <Image src={Lanny} width={158} className="mx-auto" />
             <h2 className="text-left text-white">Lanny:</h2>
             <p className="text-left text-white">
-              We met on a hiking trail—of all places, right? I was reaching for
-              a rock to keep my balance, and suddenly, Ariel’s hand was there,
-              steadying me before I slipped. We laughed, started talking, and it
-              turned out we both loved hiking, camping—anything outdoors,
-              really. After that, it was like we couldn’t stop planning new
-              adventures together."
+              Our first encounter happened on a hiking trail, an unexpected
+              setting for the beginning of a meaningful connection. As it was my
+              first hiking adventure, I found the terrain difficult and
+              frequently voiced my frustration, unaware of his quiet
+              observation. He kindly provided water and jellies to keep me up in
+              reaching the peak. While he was occupied setting up my tent, I was
+              socializing with new acquaintances. In a spontaneous moment, I
+              offered him a cookie since his hands were full and dirty—a simple
+              act that unknown to me, left a lasting impression. Since that day,
+              he has invited me on numerous hiking adventures, and now, we have
+              decided to start on an even greater journey—an exciting lifetime
+              together.
             </p>
           </div>
         </div>
