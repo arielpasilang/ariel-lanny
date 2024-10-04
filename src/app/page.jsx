@@ -109,14 +109,18 @@ export default function Home() {
           alt="Profile Picture"
         />
       </div>
-      <div className="relative py-4 bg-cover bg-center text-center bg-no-repeat bg-[#147ACE] min-h-[500px]">
+      <div className="relative py-4 bg-cover bg-center text-center bg-no-repeat bg-[#147ACE]">
         {/* Background Image with Blend Mode */}
         <div
           className="bg-top bg-cover bg-no-repeat absolute left-0 right-0 pt-32"
           style={{
             backgroundImage: `url(/images/marsh-mallow.jpeg)`,
             backgroundBlendMode: "soft-light",
-            minHeight: "350px", // Ensure full height
+            width: "100%",
+            height: "390px",
+
+            // background:
+            //   "linear-gradient(180deg, #147ACE 0%, rgba(20, 122, 206, 0.00) 10%, rgba(20, 122, 206, 0.00) 75%, #147ACE 100%), url(/images/marsh-mallow.jpeg) #147ACE 50% / cover no-repeat",
           }}
         ></div>
 
@@ -267,7 +271,7 @@ export default function Home() {
           style={{
             backgroundImage: `url(/images/with-lamp.jpeg)`,
             backgroundBlendMode: "soft-light",
-            minHeight: "350px", // Ensure full height
+            minHeight: "390px", // Ensure full height
           }}
         ></div>
 
@@ -453,7 +457,7 @@ export default function Home() {
           style={{
             backgroundImage: `url(/images/bottom-banner.jpeg)`,
             backgroundBlendMode: "soft-light",
-            minHeight: "350px", // Ensure full height
+            minHeight: "390px", // Ensure full height
           }}
         ></div>
 
