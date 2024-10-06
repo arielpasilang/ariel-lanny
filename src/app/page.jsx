@@ -38,6 +38,7 @@ const ImageContainer = ({ image }) => {
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [copy, setCopy] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -45,6 +46,11 @@ export default function Home() {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText("09271293886");
+    setCopy(true);
   };
 
   return (
@@ -227,7 +233,8 @@ export default function Home() {
           <Button
             style="primary"
             value="View Map Location"
-            link="https://maps.app.goo.gl/JXWcVbGAwuKZJ1To7"
+            href="https://maps.app.goo.gl/JXWcVbGAwuKZJ1To7"
+            link={true}
             newTab={true}
           />
         </div>
@@ -244,7 +251,8 @@ export default function Home() {
           <Button
             style="primary"
             value="View Map Location"
-            link="https://maps.app.goo.gl/7xFDXcTY22f5iQHe9"
+            href="https://maps.app.goo.gl/7xFDXcTY22f5iQHe9"
+            link={true}
             newTab={true}
           />
         </div>
@@ -435,6 +443,13 @@ export default function Home() {
         <div className="px-[33px]">
           <Image src={Gcash} className="mx-auto" />
         </div>
+        <h3 className="text-primary">or click this number</h3>
+        <h2 onClick={handleCopy} className="text-primary font-bold">
+          09271293886
+          <small className="text-primary block text-xs">
+            {copy ? "phone number copied" : ""}
+          </small>
+        </h2>
       </div>
 
       <div className="relative w-full">
