@@ -26,7 +26,7 @@ const Button: React.FC<ButtonProps> = ({
             style === "primary"
               ? "bg-primary-color text-white "
               : "bg-white text-primary-color border-primary-color "
-          } p-4 rounded-lg block text-2xl border`}
+          } p-4 rounded-lg block text-sm border`}
           href={href}
           target={newTab ? "_blank" : undefined}
         >

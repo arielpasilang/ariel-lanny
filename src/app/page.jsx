@@ -103,7 +103,12 @@ export default function Home() {
       </div>
       {/* Our Story */}
 
-      <div className="relative w-full">
+      <div
+        className="relative flex w-full"
+        style={{
+          background: "linear-gradient(0deg, #147ACE 5%, transparent 5%)",
+        }}
+      >
         <Image
           style={{
             width: "100%",
@@ -259,7 +264,12 @@ export default function Home() {
       </div>
 
       {/* Image Element */}
-      <div className="relative w-full">
+      <div
+        className="relative w-full"
+        style={{
+          background: "linear-gradient(0deg, #147ACE 5%, transparent 5%)",
+        }}
+      >
         <Image
           style={{
             width: "100%",
@@ -452,7 +462,12 @@ export default function Home() {
         </h2>
       </div>
 
-      <div className="relative w-full">
+      <div
+        className="relative w-full"
+        style={{
+          background: "linear-gradient(0deg, #147ACE 5%, transparent 5%)",
+        }}
+      >
         <Image
           style={{
             width: "100%",
