@@ -1,0 +1,302 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"></head><body style="margin:0">
+<title>Mandaue House Model</title>
+<style>
+/* Layout: full-bleed 3D canvas with a compact floating control card (bottom-left), stacks to a bottom sheet on phones */
+:root{
+  --bg:#f3f1ec; --panel:#ffffffee; --ink:#2b2a27; --muted:#6f6a60; --line:#e3ddd2;
+  --wood:#c9a47a; --wood-ink:#5b4128; --btn:#f6f2ea; --btn-on:#2b2a27; --btn-on-ink:#fbf8f2;
+  --display:"Fraunces", Georgia, "Times New Roman", serif;
+  --body:"Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#171613; --panel:#23211ded; --ink:#efe9de; --muted:#b3aa9b; --line:#3a362f;
+  --wood:#d2b089; --wood-ink:#f0dcc2; --btn:#2d2a25; --btn-on:#efe9de; --btn-on-ink:#1c1a17; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#171613; --panel:#23211ded; --ink:#efe9de; --muted:#b3aa9b; --line:#3a362f;
+  --wood:#d2b089; --wood-ink:#f0dcc2; --btn:#2d2a25; --btn-on:#efe9de; --btn-on-ink:#1c1a17; color-scheme:dark }
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);overflow:hidden}
+#stage{position:fixed;inset:0}
+#stage canvas{display:block;width:100%;height:100%;touch-action:none}
+.card{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:min(330px,calc(100vw - 32px));
+  background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;backdrop-filter:blur(8px);
+  box-shadow:0 8px 30px #0000001f;display:flex;flex-direction:column;gap:10px}
+h1{font-family:var(--display);font-weight:600;font-size:22px;line-height:1.1;margin:0;text-wrap:balance}
+.sub{font-size:12px;color:var(--muted);margin:0;line-height:1.4}
+.label{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+.row{display:flex;flex-wrap:wrap;gap:6px}
+button{font:500 12.5px var(--body);color:var(--ink);background:var(--btn);border:1px solid var(--line);border-radius:999px;padding:6px 11px;cursor:pointer}
+button[aria-pressed="true"]{background:var(--btn-on);color:var(--btn-on-ink);border-color:var(--btn-on)}
+button:focus-visible{outline:2px solid var(--wood);outline-offset:2px}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
+.sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px;border:1px solid var(--line)}
+.hint{font-size:11px;color:var(--muted);margin:0}
+#collapse{position:absolute;top:10px;right:10px;padding:3px 9px;font-size:11px}
+.card.min > :not(h1):not(#collapse){display:none}
+@media (max-width:520px){.card{left:16px;right:16px;width:auto}}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Work+Sans:wght@400;500&display=swap">
+
+<div id="stage" aria-label="3D model of the house"></div>
+
+<section class="card" id="card">
+  <button id="collapse" aria-expanded="true">Hide</button>
+  <h1>Mandaue House</h1>
+  <p class="sub">Warm white walls, light oak accents, charcoal frames and a stone-grey base · front faces 199° SSW</p>
+  <div>
+    <p class="label">View</p>
+    <div class="row" id="views">
+      <button data-view="front" aria-pressed="true">Front yard</button>
+      <button data-view="road">Road side</button>
+      <button data-view="aerial">Aerial</button>
+      <button data-view="back">Back</button>
+    </div>
+  </div>
+  <div>
+    <p class="label">Time of day</p>
+    <div class="row" id="times">
+      <button data-time="day" aria-pressed="true">Day</button>
+      <button data-time="evening">Evening</button>
+    </div>
+  </div>
+  <div>
+    <p class="label">Show</p>
+    <div class="row">
+      <button id="tRoof" aria-pressed="true">Roof &amp; parapet</button>
+      <button id="tNb" aria-pressed="false">Neighbor blocks</button>
+    </div>
+  </div>
+  <div>
+    <p class="label">Window frames</p>
+    <div class="row" id="frames">
+      <button data-frame="charcoal" aria-pressed="true">Charcoal</button>
+      <button data-frame="oak" aria-pressed="false">Light oak</button>
+    </div>
+  </div>
+  <div class="legend">
+    <span><i class="sw" style="background:#f2eee6"></i>Warm white</span>
+    <span><i class="sw" style="background:#d9b98f"></i>Light oak</span>
+    <span><i class="sw" style="background:#363636"></i>Charcoal frames</span>
+    <span><i class="sw" style="background:#b9b4aa"></i>Stone base</span>
+    <span><i class="sw" style="background:#27415f"></i>Solar</span>
+  </div>
+  <p class="hint">Drag to orbit · pinch or scroll to zoom · right-drag to pan. Massing model from the plans; sizes approximate.</p>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function(){
+const T = THREE;
+const stage = document.getElementById('stage');
+const renderer = new T.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = T.PCFSoftShadowMap;
+renderer.outputEncoding = T.sRGBEncoding; renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.95;
+stage.appendChild(renderer.domElement);
+const scene = new T.Scene();
+const camera = new T.PerspectiveCamera(40, 1, 0.1, 200);
+const controls = new T.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.maxPolarAngle = Math.PI*0.495; controls.minDistance = 4; controls.maxDistance = 45;
+
+// ---------- units: plan cm -> metres. World X = x/100 (east→west), Z = plan y/100 (south→north), Y up
+const cm = v => v/100;
+const TAN = Math.tan(10*Math.PI/180);
+const Hroof = z => 6.45 + (z-1.10)*TAN;   // roof underside line (m), z in m
+
+// ---------- materials
+const M = {
+  wall:  new T.MeshStandardMaterial({color:0xf2eee6, roughness:.92}),
+  frame: new T.MeshStandardMaterial({color:0x363636, roughness:.6, metalness:.3}),
+  base:  new T.MeshStandardMaterial({color:0xb9b4aa, roughness:.95}),
+  wall2: new T.MeshStandardMaterial({color:0xeeebe4, roughness:.95}),
+  wood:  new T.MeshStandardMaterial({color:0xd9b98f, roughness:.75}),
+  woodD: new T.MeshStandardMaterial({color:0xc49a6c, roughness:.8}),
+  roof:  new T.MeshStandardMaterial({color:0x9aa0a6, roughness:.7}),
+  glass: new T.MeshStandardMaterial({color:0x9fc0d4, roughness:.08, metalness:.35, emissive:0x000000}),
+  rail:  new T.MeshStandardMaterial({color:0xcfe3ee, roughness:.05, metalness:.1, transparent:true, opacity:.35}),
+  poly:  new T.MeshStandardMaterial({color:0xffffff, roughness:.3, transparent:true, opacity:.55}),
+  panel: new T.MeshStandardMaterial({color:0x27415f, roughness:.25, metalness:.4}),
+  grass: new T.MeshStandardMaterial({color:0xa9c98f, roughness:1}),
+  pave:  new T.MeshStandardMaterial({color:0xc8cbc3, roughness:1}),
+  road:  new T.MeshStandardMaterial({color:0xbdbab3, roughness:1}),
+  stone: new T.MeshStandardMaterial({color:0xe2dccf, roughness:1}),
+  dark:  new T.MeshStandardMaterial({color:0x3b3b3b, roughness:.8}),
+  leaf:  new T.MeshStandardMaterial({color:0x7fae6b, roughness:1}),
+  car:   new T.MeshStandardMaterial({color:0xece6d8, roughness:.45, metalness:.2}),
+  louver:new T.MeshStandardMaterial({color:0xe7e2d8, roughness:.8}),
+  ghost: new T.MeshStandardMaterial({color:0xcfcac0, roughness:1, transparent:true, opacity:.45}),
+};
+Object.values(M).forEach(m=>m.color.convertSRGBToLinear());
+const house = new T.Group(), roofGrp = new T.Group(), nbGrp = new T.Group();
+scene.add(house, roofGrp, nbGrp);
+
+function box(x1,x2,y1,y2,z1,z2,mat,parent=house,cast=true){ // x,z in cm ; y in m
+  const g = new T.BoxGeometry(Math.abs(cm(x2-x1)), Math.abs(y2-y1), Math.abs(cm(z2-z1)));
+  const m = new T.Mesh(g, mat); m.position.set(cm((x1+x2)/2), (y1+y2)/2, cm((z1+z2)/2));
+  m.castShadow = cast; m.receiveShadow = true; parent.add(m); return m;
+}
+// extrude a plan polygon (cm) between y=bottom(z) and y=top(z)
+function prism(poly, bottom, top, mats, parent=house, holes){
+  const sh = new T.Shape(poly.map(p=>new T.Vector2(cm(p[0]), -cm(p[1]))));
+  if(holes) holes.forEach(h=>sh.holes.push(new T.Path(h.map(p=>new T.Vector2(cm(p[0]), -cm(p[1]))))));
+  const g = new T.ExtrudeGeometry(sh,{depth:1,bevelEnabled:false});
+  g.rotateX(-Math.PI/2);
+  const pos = g.attributes.position;
+  for(let i=0;i<pos.count;i++){ const z=pos.getZ(i); pos.setY(i, pos.getY(i)>0.5 ? top(z) : bottom(z)); }
+  g.computeVertexNormals();
+  const m = new T.Mesh(g, mats); m.castShadow = true; m.receiveShadow = true; parent.add(m); return m;
+}
+const flat = v => () => v;
+
+// ---------- site
+prism([[247,-343],[730,-260],[730,800],[110,800],[110,590],[170,110]], flat(-0.05), flat(0), [M.grass,M.grass]);
+box(733,953,-0.06,0.0,-360,800,M.road,house,false);
+box(300,728,0,0.02,-255,0,M.pave,house,false);
+for(let x=295;x<=680;x+=55) box(x,x+40,0,0.03,45,85,M.stone,house,false);
+// fence (white, wood cap) along slanted east side and south edge
+function wallSeg(a,b,h,th,mat,cap){
+  const dx=cm(b[0]-a[0]), dz=cm(b[1]-a[1]), L=Math.hypot(dx,dz);
+  const g=new T.BoxGeometry(L,h,th); const m=new T.Mesh(g,mat);
+  m.position.set(cm((a[0]+b[0])/2),h/2,cm((a[1]+b[1])/2)); m.rotation.y=-Math.atan2(dz,dx);
+  m.castShadow=true; m.receiveShadow=true; house.add(m);
+  if(cap){const c=new T.Mesh(new T.BoxGeometry(L,0.05,th+0.04),M.wood); c.position.set(m.position.x,h+0.025,m.position.z); c.rotation.y=m.rotation.y; house.add(c);}
+}
+wallSeg([247,-343],[730,-260],1.1,0.12,M.wall,true);
+wallSeg([247,-343],[170,110],1.1,0.12,M.wall,true);
+wallSeg([170,110],[110,590],1.1,0.12,M.wall,true);
+
+// sliding gate in light wood slats (370 cm) on the road side
+for(let z=-255; z<108; z+=13) box(728,736,0.05,1.8,z,z+9,M.wood);
+box(726,738,0,1.9,-266,-252,M.dark); box(726,738,0,1.9,104,116,M.dark);
+box(727,737,1.8,1.86,-260,110,M.woodD);
+
+// ---------- ground floor mass
+const GF = [[333,110],[730,110],[730,800],[110,800],[110,590],[170,590],[170,330],[333,330]];
+prism(GF, flat(0), flat(3.45), [M.wall,M.wall]);
+// darker stone-grey base band (hides rain splash)
+prism([[332,109],[731,109],[731,801],[109,801],[109,589],[169,589],[169,329],[332,329]], flat(0), flat(0.5), [M.base,M.base]);
+// ---------- 2nd floor mass (top follows the 10° roof)
+const F2 = [[333,110],[730,110],[730,800],[110,800],[110,590],[170,590],[170,370],[333,370]];
+prism(F2, flat(3.45), z=>Hroof(z)+0.15, [M.roof,M.wall]);
+// floor band (light wood) at 2F slab edge on the front and road side
+box(333,730,3.30,3.45,106,110,M.wood); box(730,734,3.30,3.45,110,800,M.wood);
+// ---------- parapet ring with light-wood cap
+const inner = [[348,125],[715,125],[715,785],[125,785],[125,605],[185,605],[185,385],[348,385]];
+prism(F2, z=>Hroof(z)+0.10, z=>Hroof(z)+0.70, [M.wood,M.wall], roofGrp, [inner.slice().reverse()]);
+// ---------- solar panels (8 × 600 W, landscape) following the slope
+const proj = 113.4*Math.cos(10*Math.PI/180);
+const panels = [[422,190],[422,192+proj]];
+for(let r=0;r<3;r++){const y=418+r*(proj+2); panels.push([232,y],[462,y]);}
+panels.forEach(([x,y])=>{
+  const zc=cm(y+proj/2), g=new T.BoxGeometry(2.278,0.04,1.134);
+  const m=new T.Mesh(g,M.panel); m.position.set(cm(x+113.9), Hroof(zc)+0.24, zc); m.rotation.x=-10*Math.PI/180;
+  m.castShadow=true; roofGrp.add(m);
+});
+// back louvers (hot air out above stairs)
+box(250,530,6.55,7.45,798,806,M.louver);
+for(let y=6.62;y<7.42;y+=0.12) box(252,528,y,y+0.03,804,809,M.woodD);
+
+// ---------- openings: glass with light-wood frames
+function winZ(x1,x2,y1,y2,z,out){ // on a south/north face at plan y=z ; out = -1 south, +1 north
+  box(x1-6,x2+6,y1-0.06,y2+0.06,z-2*out,z+3*out,M.frame);
+  box(x1,x2,y1,y2,z-1*out,z+5*out,M.glass);
+}
+function winX(z1,z2,y1,y2,x,canopy){ // on the road face (x=730)
+  box(x-2,x+3,y1-0.06,y2+0.06,z1-6,z2+6,M.frame);
+  box(x-1,x+5,y1,y2,z1,z2,M.glass);
+  if(canopy) box(x,x+45,y2+0.15,y2+0.21,z1-15,z2+15,M.woodD);
+}
+// front (south)
+winZ(431,631,1.35,2.55,110,-1);                 // GF room window (shaded by balcony)
+box(431,631,3.45,5.55,104,112,M.glass);         // Room C sliding glass door
+box(425,437,3.45,5.61,103,112,M.frame); box(625,637,3.45,5.61,103,112,M.frame); box(425,637,5.55,5.61,103,112,M.frame); box(529,533,3.45,5.55,103,112,M.frame);
+winZ(180,245,4.35,5.55,370,-1); winZ(260,325,4.35,5.55,370,-1); box(245,260,4.29,5.61,364,371,M.wall2);
+box(252,332,0.45,2.55,324,331,M.woodD);          // living room front door (light oak)
+box(246,338,0.45,2.61,326,330,M.frame);
+// road side (west, afternoon sun → wood canopies)
+winX(345,445,1.35,2.55,730,true);   // dining
+winX(650,740,1.45,2.55,730,true);   // kitchen
+winX(150,250,4.35,5.55,730,true);   // office
+winX(370,490,4.35,5.55,730,true);   // closet
+winX(725,785,4.85,5.55,730,false);  // laundry
+// east vents (small, high)
+[[150,180],[205,235]].forEach(([a,b])=>{box(328,333,2.25,2.55,a,b,M.louver); box(328,333,5.25,5.55,a,b,M.louver);});
+
+// ---------- balcony in front of Room C (100 cm cantilever, wood deck, glass rail)
+box(333,730,3.28,3.45,10,110,M.wood);
+box(333,730,3.45,4.55,10,13,M.rail,house,false);
+box(333,336,3.45,4.55,10,110,M.rail,house,false); box(727,730,3.45,4.55,10,110,M.rail,house,false);
+box(333,730,4.55,4.60,9,14,M.woodD); box(331,337,4.55,4.60,10,110,M.woodD); box(726,732,4.55,4.60,10,110,M.woodD);
+// balcony chairs + table
+box(380,420,3.45,3.9,35,75,M.wall2); box(470,510,3.45,3.9,35,75,M.wall2);
+const tbl=new T.Mesh(new T.CylinderGeometry(0.16,0.16,0.5,20),M.wood); tbl.position.set(cm(445),3.7,cm(55)); tbl.castShadow=true; house.add(tbl);
+
+// ---------- entry: canopy, steps, plants
+box(170,333,3.28,3.33,112,330,M.poly,house,false);
+box(170,333,3.33,3.37,110,116,M.wood); box(170,176,3.28,3.37,110,330,M.wood);
+for(let i=0;i<3;i++) box(243,333,0,0.15*(i+1),255+25*i,330,M.stone);
+function tree(x,z,r,h){const t=new T.Mesh(new T.CylinderGeometry(0.06,0.09,h,8),M.woodD); t.position.set(cm(x),h/2,cm(z)); t.castShadow=true; house.add(t);
+  const f=new T.Mesh(new T.SphereGeometry(r,18,14),M.leaf); f.position.set(cm(x),h+r*0.6,cm(z)); f.castShadow=true; house.add(f);}
+tree(272,-262,0.55,1.5); tree(258,-110,0.35,0.5); tree(202,70,0.3,0.45); tree(311,134,0.25,0.4);
+// motorcycle (simple)
+box(185,215,0.2,0.9,150,300,new T.MeshStandardMaterial({color:0xb5463a,roughness:.5}));
+
+// ---------- Jimny (simple massing), nose toward gate
+box(330,712,0.35,1.15,-188,-23,M.car); box(360,640,1.15,1.72,-182,-29,M.car);
+box(590,640,1.18,1.66,-183,-28,M.glass); box(316,330,0.6,1.2,-130,-80,M.dark);
+[[380,-188],[380,-23],[650,-188],[650,-23]].forEach(([x,z])=>{const w=new T.Mesh(new T.CylinderGeometry(0.36,0.36,0.24,20),M.dark); w.rotation.x=Math.PI/2; w.position.set(cm(x),0.36,cm(z)); w.castShadow=true; house.add(w);});
+
+// ---------- neighbor blocks (context, optional)
+box(-300,105,0,6.2,-330,800,M.ghost,nbGrp); box(110,730,0,6.4,806,1200,M.ghost,nbGrp);
+nbGrp.visible=false;
+
+// ---------- lights
+const hemi = new T.HemisphereLight(0xffffff, 0xb9c4a8, 0.75); scene.add(hemi);
+const sun = new T.DirectionalLight(0xfff4e2, 1.05);
+sun.castShadow = true; sun.shadow.mapSize.set(2048,2048);
+Object.assign(sun.shadow.camera,{left:-14,right:14,top:14,bottom:-14,near:1,far:60}); sun.shadow.bias=-0.0006;
+scene.add(sun, sun.target); sun.target.position.set(4.2,2,2.5);
+const warm = [];
+function lamp(x,y,z,i){const l=new T.PointLight(0xffc27a,0,7,2); l.position.set(cm(x),y,cm(z)); scene.add(l); warm.push([l,i]);}
+lamp(530,4.3,55,1.4); lamp(250,3.0,220,1.2); lamp(760,2.9,395,0.8); lamp(530,2.2,60,0.8);
+
+function setTime(t){
+  const eve = t==='evening';
+  scene.background = new T.Color(eve?0x2b3858:0xdfe9ef).convertSRGBToLinear();
+  scene.fog = new T.Fog(scene.background, 30, 90);
+  hemi.intensity = eve?0.22:0.75; hemi.color.set(eve?0x8fa0c8:0xffffff);
+  sun.intensity = eve?0.12:1.05; sun.color.set(eve?0x9fb0e0:0xfff4e2);
+  sun.position.set(eve?-6:8.5, eve?9:16, eve?14:-12);   // day sun from the SSW (front)
+  M.glass.emissive.set(eve?0xffb865:0x000000); M.glass.emissive.convertSRGBToLinear(); M.glass.emissiveIntensity = eve?0.55:0;
+  warm.forEach(([l,i])=>l.intensity = eve?i:0);
+}
+
+// ---------- views
+const target = new T.Vector3(3.4,3.3,2.2);
+const VIEWS = {
+  front:[-1.2,6.2,-15.5], road:[24,7.5,0.5], aerial:[-9,21,-13], back:[6,8.5,22]
+};
+function setView(v){ camera.position.set(...VIEWS[v]); controls.target.copy(target); controls.update(); }
+
+function resize(){ const w=stage.clientWidth,h=stage.clientHeight; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
+window.addEventListener('resize',resize);
+
+function press(groupSel,btn){ document.querySelectorAll(groupSel+' button').forEach(b=>b.setAttribute('aria-pressed', b===btn?'true':'false')); }
+document.getElementById('views').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b)return; press('#views',b); setView(b.dataset.view);});
+document.getElementById('times').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b)return; press('#times',b); setTime(b.dataset.time);});
+const tRoof=document.getElementById('tRoof'), tNb=document.getElementById('tNb');
+tRoof.addEventListener('click',()=>{const on=tRoof.getAttribute('aria-pressed')!=='true'; tRoof.setAttribute('aria-pressed',on); roofGrp.visible=on;});
+tNb.addEventListener('click',()=>{const on=tNb.getAttribute('aria-pressed')!=='true'; tNb.setAttribute('aria-pressed',on); nbGrp.visible=on;});
+document.getElementById('frames').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b)return; press('#frames',b); M.frame.color.set(b.dataset.frame==='oak'?0xd9b98f:0x363636).convertSRGBToLinear(); M.frame.metalness=b.dataset.frame==='oak'?0:.3;});
+const card=document.getElementById('card'), col=document.getElementById('collapse');
+col.addEventListener('click',()=>{const min=card.classList.toggle('min'); col.textContent=min?'Show':'Hide'; col.setAttribute('aria-expanded',!min);});
+
+setTime('day'); resize(); setView('front');
+if (window.innerWidth < 600 || window.innerHeight < 560) { card.classList.add('min'); col.textContent='Show'; col.setAttribute('aria-expanded','false'); }
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+controls.enableDamping = !reduce;
+(function loop(){ requestAnimationFrame(loop); controls.update(); renderer.render(scene,camera); })();
+})();
+</script>
+</body></html>
