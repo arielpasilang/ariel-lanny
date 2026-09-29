@@ -46,9 +46,9 @@ const Divider = () => (
 
 export default function HousePlans() {
   return (
-    <main className="max-w-screen-sm mx-auto px-[18px] py-12 flex flex-col gap-12 text-center">
+    <main className="w-full px-[18px] sm:px-8 py-12 flex flex-col gap-12 text-center">
       {/* Intro */}
-      <section className="flex flex-col gap-4">
+      <section className="flex flex-col gap-4 max-w-screen-md w-full mx-auto">
         <h1 className="text-primary">Our Future Home</h1>
         <Divider />
         <p className="text-primary">
@@ -77,7 +77,7 @@ export default function HousePlans() {
         <p className="text-primary text-lg">
           Drag to turn the house, pinch or scroll to zoom. Try the evening view.
         </p>
-        <div className="w-full rounded-2xl overflow-hidden border border-primary-color h-[70vh] min-h-[420px] max-h-[640px]">
+        <div className="w-full rounded-2xl overflow-hidden border border-primary-color h-[85vh] min-h-[420px]">
           <iframe
             src="/house-plans/model.html"
             title="3D model of our house"
@@ -90,7 +90,7 @@ export default function HousePlans() {
           href="/house-plans/model.html"
           target="_blank"
           rel="noopener"
-          className="bg-white text-primary-color border-primary-color border p-4 rounded-lg block text-xl"
+          className="bg-white text-primary-color border-primary-color border p-4 rounded-lg block text-xl w-full max-w-screen-sm mx-auto"
         >
           Open 3D model full screen
         </a>
@@ -100,23 +100,25 @@ export default function HousePlans() {
       <section className="flex flex-col gap-6">
         <h2 className="text-primary">Plans</h2>
         <Divider />
-        {plans.map((p) => (
-          <figure key={p.src} className="flex flex-col gap-2">
-            <a href={p.src} target="_blank" rel="noopener">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={p.src}
-                alt={p.title}
-                loading="lazy"
-                className="w-full h-auto rounded-xl border border-[#e3ddd2] bg-white"
-              />
-            </a>
-            <figcaption>
-              <h4 className="text-primary">{p.title}</h4>
-              <p className="text-primary text-base opacity-80">{p.note}</p>
-            </figcaption>
-          </figure>
-        ))}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {plans.map((p) => (
+            <figure key={p.src} className="flex flex-col gap-2">
+              <a href={p.src} target="_blank" rel="noopener">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={p.src}
+                  alt={p.title}
+                  loading="lazy"
+                  className="w-full h-auto rounded-xl border border-[#e3ddd2] bg-white"
+                />
+              </a>
+              <figcaption>
+                <h4 className="text-primary">{p.title}</h4>
+                <p className="text-primary text-base opacity-80">{p.note}</p>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
       </section>
 
       {/* PDF */}
@@ -126,7 +128,7 @@ export default function HousePlans() {
           All drawings, notes and checklists in one PDF for our architect and
           builder.
         </p>
-        <div className="w-full rounded-2xl overflow-hidden border border-primary-color h-[70vh] min-h-[420px] max-h-[720px] hidden sm:block">
+        <div className="w-full rounded-2xl overflow-hidden border border-primary-color h-[90vh] min-h-[420px] hidden sm:block">
           <object
             data="/house-plans/House-Plan-Package.pdf#view=FitH"
             type="application/pdf"
@@ -142,13 +144,13 @@ export default function HousePlans() {
           href="/house-plans/House-Plan-Package.pdf"
           target="_blank"
           rel="noopener"
-          className="bg-primary-color text-white p-4 rounded-lg block text-xl border"
+          className="bg-primary-color text-white p-4 rounded-lg block text-xl border w-full max-w-screen-sm mx-auto"
         >
           View / download the PDF
         </a>
       </section>
 
-      <footer className="flex flex-col gap-3">
+      <footer className="flex flex-col gap-3 max-w-screen-md w-full mx-auto">
         <Divider />
         <p className="text-primary text-base opacity-70">
           Concept drawings for planning only — to be finalized by a licensed
